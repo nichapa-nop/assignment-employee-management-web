@@ -143,7 +143,7 @@ export function EmployeeTable({
                     type="button"
                     onClick={() => onDelete(employee)}
                     aria-label={`Delete ${employee.name}`}
-                    className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-slate-600 hover:bg-error-light hover:text-error focus-visible:outline-2 focus-visible:outline-error"
+                    className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-slate-600 hover:bg-error-light hover:text-red-600 focus-visible:outline-2 focus-visible:outline-error"
                   >
                     <Trash2 aria-hidden="true" className="size-4" />
                     Delete

@@ -134,7 +134,7 @@ export function EmployeeFiltersPanel({
       </div>
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div role="alert" className="text-sm text-error">
+        <div role="alert" className="text-sm text-red-600">
           {errors.map((error) => (
             <p key={error}>{error}</p>
           ))}

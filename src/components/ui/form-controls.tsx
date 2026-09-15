@@ -48,12 +48,12 @@ export function Field({
         {Icon && <Icon aria-hidden="true" className="size-5 text-neutral" />}
         <span>
           {label}
-          {required && <span className="ml-0.5 text-error">*</span>}
+          {required && <span className="ml-0.5 text-red-600">*</span>}
         </span>
       </label>
       {children}
       {error ? (
-        <p id={`${id}-error`} className="text-sm text-error">
+        <p id={`${id}-error`} className="text-sm text-red-600">
           {error}
         </p>
       ) : (

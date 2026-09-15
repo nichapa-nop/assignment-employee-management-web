@@ -39,7 +39,7 @@ export function StatePanel({
       <p
         className={cn(
           "text-base font-semibold",
-          tone === "error" ? "text-error" : "text-slate-900",
+          tone === "error" ? "text-red-600" : "text-slate-900",
         )}
       >
         {title}

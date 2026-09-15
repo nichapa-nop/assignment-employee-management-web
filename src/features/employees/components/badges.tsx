@@ -17,9 +17,9 @@ const DEPARTMENT_STYLES: Record<string, DepartmentStyle> = {
   Marketing: { icon: Megaphone, className: "bg-violet-50 text-violet-600" },
   Sales: {
     icon: ChartColumnIncreasing,
-    className: "bg-success-light/60 text-emerald-600",
+    className: "bg-success-light/60 text-emerald-700",
   },
-  HR: { icon: UserRound, className: "bg-fuchsia-50 text-fuchsia-600" },
+  HR: { icon: UserRound, className: "bg-fuchsia-50 text-fuchsia-700" },
 };
 
 const FALLBACK_STYLE: DepartmentStyle = {
@@ -51,7 +51,7 @@ export function StatusBadge({ isActive }: { isActive: boolean }) {
         "inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-sm font-medium",
         isActive
           ? "bg-success-light text-emerald-700"
-          : "bg-slate-100 text-neutral",
+          : "bg-slate-100 text-slate-600",
       )}
     >
       <span
