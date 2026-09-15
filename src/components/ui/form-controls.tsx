@@ -46,10 +46,12 @@ export function Field({
         className="flex items-center gap-2 text-sm font-medium text-slate-700"
       >
         {Icon && <Icon aria-hidden="true" className="size-5 text-neutral" />}
-        <span>
-          {label}
-          {required && <span className="ml-0.5 text-red-600">*</span>}
-        </span>
+        {label}
+        {required && (
+          <span className="-ml-1.5 text-red-600">
+            *
+          </span>
+        )}
       </label>
       {children}
       {error ? (
