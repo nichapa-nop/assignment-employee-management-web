@@ -43,7 +43,7 @@ export function Modal({
     <dialog
       ref={dialogRef}
       aria-labelledby="modal-title"
-      className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-xl bg-white p-0 text-slate-900 shadow-xl backdrop:bg-slate-900/40"
+      className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl bg-white p-0 text-slate-900 shadow-xl backdrop:bg-slate-900/40"
       // Escape is handled explicitly: not every browser fires "cancel" for it,
       // and preventing the keydown stops the native close so state stays in sync.
       onKeyDown={(event) => {
@@ -71,7 +71,7 @@ export function Modal({
             {title}
           </h2>
           {description && (
-            <p className="mt-1 text-sm text-slate-500">{description}</p>
+            <p className="mt-1 text-sm text-neutral">{description}</p>
           )}
         </div>
         <button
@@ -87,7 +87,7 @@ export function Modal({
       </div>
       <div className="px-6 py-5">{children}</div>
       {footer && (
-        <div className="flex justify-end gap-3 rounded-b-xl border-t border-slate-200 bg-slate-50 px-6 py-4">
+        <div className="flex justify-end gap-3 rounded-b-2xl border-t border-slate-100 bg-background px-6 py-4">
           {footer}
         </div>
       )}

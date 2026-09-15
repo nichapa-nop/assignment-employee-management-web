@@ -23,6 +23,13 @@ export function formatSalary(value: number): string {
   return salaryFormatter.format(value);
 }
 
+export const CURRENCY_SYMBOL = "฿";
+
+/** Formats a salary with the Thai baht symbol, e.g. 65000 → "฿65,000.00". */
+export function formatCurrency(value: number): string {
+  return `${CURRENCY_SYMBOL}${formatSalary(value)}`;
+}
+
 function toDayMonthYear(day: number, monthIndex: number, year: number): string {
   return `${day}-${MONTHS[monthIndex]}-${String(year % 100).padStart(2, "0")}`;
 }

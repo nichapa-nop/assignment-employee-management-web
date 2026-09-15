@@ -67,7 +67,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={toast.id}
             className={cn(
               "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg px-4 py-3 text-sm text-white shadow-lg",
-              toast.tone === "success" ? "bg-emerald-600" : "bg-red-600",
+              toast.tone === "success" ? "bg-success" : "bg-error",
             )}
           >
             <p className="flex-1">{toast.message}</p>

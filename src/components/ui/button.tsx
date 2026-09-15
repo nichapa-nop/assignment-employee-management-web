@@ -6,17 +6,18 @@ type Size = "sm" | "md";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-blue-600 text-white hover:bg-blue-700 focus-visible:outline-blue-600",
+    "bg-primary text-white shadow-sm hover:bg-primary-hover focus-visible:outline-primary",
   secondary:
-    "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 focus-visible:outline-blue-600",
-  danger: "bg-red-600 text-white hover:bg-red-700 focus-visible:outline-red-600",
+    "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:outline-primary",
+  danger:
+    "bg-error text-white shadow-sm hover:bg-red-600 focus-visible:outline-error",
   ghost:
-    "text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-blue-600",
+    "text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-primary",
 };
 
 const SIZES: Record<Size, string> = {
-  sm: "h-8 px-2.5 text-sm",
-  md: "h-10 px-4 text-sm",
+  sm: "h-9 px-3 text-sm",
+  md: "h-11 px-5 text-sm",
 };
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,7 +36,7 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         VARIANTS[variant],
         SIZES[size],
         className,
