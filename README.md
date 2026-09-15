@@ -42,7 +42,8 @@ rebuild after changing them and never put secrets in them.
 
 ### Running the full stack
 
-1. Start PostgreSQL locally.
+1. Start PostgreSQL locally and create the database:
+   `CREATE DATABASE employee_management TEMPLATE template0;`
 2. In the API repository: `cp .env.example .env`, adjust the `DB_*` values,
    then `npm install`, `npm run db:setup` (migrations + Excel seed) and
    `npm run start:dev` (serves `http://localhost:3001/api`).
