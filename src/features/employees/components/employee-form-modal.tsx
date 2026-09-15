@@ -5,7 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/form-controls";
 import { Modal } from "@/components/ui/modal";
 import { ApiError } from "@/lib/api-client";
-import { formatSalary, formatTimestampDate } from "@/lib/format";
+import {
+  CURRENCY_SYMBOL,
+  formatSalary,
+  formatTimestampDate,
+} from "@/lib/format";
 import { employeesApi } from "../api/employees.api";
 import {
   EMPTY_FORM_VALUES,
@@ -125,7 +129,7 @@ export function EmployeeFormModal({
         {formError && (
           <p
             role="alert"
-            className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
+            className="rounded-lg bg-error-light px-3 py-2 text-sm text-red-700"
           >
             {formError}
           </p>
@@ -177,6 +181,7 @@ export function EmployeeFormModal({
               id="employee-salary"
               inputMode="decimal"
               placeholder="0.00"
+              leading={CURRENCY_SYMBOL}
               value={values.salary}
               invalid={Boolean(errors.salary)}
               onChange={(event) => setValue("salary", event.target.value)}
@@ -201,16 +206,16 @@ export function EmployeeFormModal({
           </Field>
         </div>
 
-        <label className="flex items-center gap-3 rounded-md border border-slate-200 px-3 py-2.5">
+        <label className="flex items-center gap-3 rounded-lg border border-slate-200 px-4 py-3">
           <input
             type="checkbox"
             checked={values.isActive}
             onChange={(event) => setValue("isActive", event.target.checked)}
-            className="size-4 rounded border-slate-300 accent-blue-600"
+            className="size-4 rounded border-slate-300 accent-primary"
           />
           <span className="text-sm">
             <span className="font-medium text-slate-900">Active</span>
-            <span className="block text-slate-500">
+            <span className="block text-neutral">
               Uncheck to mark the employee as inactive.
             </span>
           </span>

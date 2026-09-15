@@ -39,12 +39,12 @@ export function StatePanel({
       <p
         className={cn(
           "text-base font-semibold",
-          tone === "error" ? "text-red-700" : "text-slate-900",
+          tone === "error" ? "text-error" : "text-slate-900",
         )}
       >
         {title}
       </p>
-      {message && <p className="max-w-md text-sm text-slate-500">{message}</p>}
+      {message && <p className="max-w-md text-sm text-neutral">{message}</p>}
       {action && <div className="mt-3">{action}</div>}
     </div>
   );

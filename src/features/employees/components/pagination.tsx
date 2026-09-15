@@ -22,7 +22,7 @@ export function Pagination({
   return (
     <nav
       aria-label="Pagination"
-      className="flex flex-col gap-3 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between"
+      className="flex flex-col gap-3 border-t border-slate-100 px-6 py-4 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between"
     >
       <p>
         Showing <span className="font-medium text-slate-900">{from}</span>–
@@ -30,13 +30,13 @@ export function Pagination({
         <span className="font-medium text-slate-900">{total}</span>
       </p>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-4">
         <label className="flex items-center gap-2">
           <span>Rows</span>
           <select
             value={limit}
             onChange={(event) => onLimitChange(Number(event.target.value))}
-            className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm focus:outline-2 focus:outline-blue-600"
+            className="h-9 rounded-lg border border-slate-200 bg-white px-3 text-sm focus:outline-2 focus:outline-primary"
           >
             {PAGE_SIZES.map((size) => (
               <option key={size} value={size}>
@@ -50,7 +50,7 @@ export function Pagination({
           Page {totalPages === 0 ? 0 : page} of {totalPages}
         </span>
 
-        <div className="flex gap-1">
+        <div className="flex gap-2">
           <Button
             variant="secondary"
             size="sm"

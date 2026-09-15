@@ -1,6 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import {
+  Building2,
+  CalendarDays,
+  Database,
+  RotateCcw,
+  Search,
+  UserCheck,
+} from "lucide-react";
 import { Field, Input, Select } from "@/components/ui/form-controls";
 import type { FilterDraft, TextFilterKey } from "../hooks/use-filter-draft";
 import { hasActiveFilters } from "../lib/filters";
@@ -30,14 +37,15 @@ export function EmployeeFiltersPanel({
   return (
     <section
       aria-label="Search and filters"
-      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
+      className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60 sm:p-6"
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <div className="sm:col-span-2">
-          <Field id="filter-search" label="Search">
+          <Field id="filter-search" label="Search" icon={Search}>
             <Input
               id="filter-search"
               type="search"
+              leading={<Search className="size-4" />}
               placeholder="Name or ID"
               value={draft.search}
               onChange={(event) => onDraftChange("search", event.target.value)}
@@ -45,7 +53,7 @@ export function EmployeeFiltersPanel({
           </Field>
         </div>
 
-        <Field id="filter-department" label="Department">
+        <Field id="filter-department" label="Department" icon={Building2}>
           <Select
             id="filter-department"
             value={filters.department}
@@ -60,7 +68,7 @@ export function EmployeeFiltersPanel({
           </Select>
         </Field>
 
-        <Field id="filter-status" label="Status">
+        <Field id="filter-status" label="Status" icon={UserCheck}>
           <Select
             id="filter-status"
             value={filters.isActive}
@@ -74,7 +82,7 @@ export function EmployeeFiltersPanel({
           </Select>
         </Field>
 
-        <Field id="filter-join-from" label="Joined from">
+        <Field id="filter-join-from" label="Joined from" icon={CalendarDays}>
           <Input
             id="filter-join-from"
             type="date"
@@ -84,7 +92,7 @@ export function EmployeeFiltersPanel({
           />
         </Field>
 
-        <Field id="filter-join-to" label="Joined to">
+        <Field id="filter-join-to" label="Joined to" icon={CalendarDays}>
           <Input
             id="filter-join-to"
             type="date"
@@ -94,7 +102,7 @@ export function EmployeeFiltersPanel({
           />
         </Field>
 
-        <Field id="filter-salary-min" label="Min salary">
+        <Field id="filter-salary-min" label="Min salary" icon={Database}>
           <Input
             id="filter-salary-min"
             type="number"
@@ -109,7 +117,7 @@ export function EmployeeFiltersPanel({
           />
         </Field>
 
-        <Field id="filter-salary-max" label="Max salary">
+        <Field id="filter-salary-max" label="Max salary" icon={Database}>
           <Input
             id="filter-salary-max"
             type="number"
@@ -125,23 +133,23 @@ export function EmployeeFiltersPanel({
         </Field>
       </div>
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div role="alert" className="text-sm text-red-600">
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div role="alert" className="text-sm text-error">
           {errors.map((error) => (
             <p key={error}>{error}</p>
           ))}
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
+        <button
+          type="button"
           onClick={onReset}
           disabled={
             !hasActiveFilters(filters) && !Object.values(draft).some(Boolean)
           }
-          className="self-end"
+          className="inline-flex items-center gap-1.5 self-end rounded-md px-2 py-1 text-sm text-neutral hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
         >
+          <RotateCcw aria-hidden="true" className="size-4" />
           Clear filters
-        </Button>
+        </button>
       </div>
     </section>
   );

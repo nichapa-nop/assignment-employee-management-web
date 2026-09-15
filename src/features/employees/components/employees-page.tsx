@@ -1,5 +1,6 @@
 "use client";
 
+import { Plus, Users } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
@@ -174,19 +175,23 @@ export function EmployeesPage() {
   return (
     <div className="space-y-6">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-            Employees
-          </h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Search, filter and manage employee records.
-          </p>
+        <div className="flex items-center gap-4">
+          <Users
+            aria-hidden="true"
+            className="size-10 fill-primary text-primary"
+          />
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+              Employees
+            </h1>
+            <p className="mt-1 text-sm text-neutral">
+              Search, filter and manage employee records.
+            </p>
+          </div>
         </div>
         <Button onClick={() => setFormState({ mode: "create" })}>
-          <span aria-hidden="true" className="text-base leading-none">
-            +
-          </span>
-          Add employee
+          <Plus aria-hidden="true" className="size-4" strokeWidth={2.5} />
+          Add Employee
         </Button>
       </header>
 
@@ -202,7 +207,7 @@ export function EmployeesPage() {
 
       <section
         aria-label="Employee list"
-        className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+        className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60"
       >
         {renderResults()}
       </section>
