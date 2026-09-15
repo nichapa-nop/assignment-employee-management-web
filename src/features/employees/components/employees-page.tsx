@@ -9,6 +9,7 @@ import {
   useRefreshEmployees,
 } from "../hooks/use-employees";
 import { useEmployeeFilters } from "../hooks/use-employee-filters";
+import { useFilterDraft } from "../hooks/use-filter-draft";
 import { getFilterErrors, hasActiveFilters } from "../lib/filters";
 import type { Employee, EmployeeSortField } from "../types";
 import { DeleteEmployeeDialog } from "./delete-employee-dialog";
@@ -22,6 +23,10 @@ type FormState = { mode: "create" } | { mode: "edit"; employee: Employee };
 
 export function EmployeesPage() {
   const { filters, updateFilters, resetFilters } = useEmployeeFilters();
+  const { draft, setDraftValue, clearDraft } = useFilterDraft(
+    filters,
+    updateFilters,
+  );
   const filterErrors = getFilterErrors(filters);
   const employeesQuery = useEmployees(filters, filterErrors.length === 0);
   const departmentsQuery = useDepartments();
@@ -35,6 +40,11 @@ export function EmployeesPage() {
 
   const departments = departmentsQuery.data ?? [];
   const { data, error, isValidating } = employeesQuery;
+
+  const handleResetFilters = () => {
+    clearDraft();
+    resetFilters();
+  };
 
   const handleRetry = () => {
     void refreshEmployees();
@@ -80,7 +90,9 @@ export function EmployeesPage() {
       );
     }
 
-    if (error && !data) {
+    // Checked before data: with keepPreviousData a failed request would
+    // otherwise keep showing rows that don't match the current filters.
+    if (error) {
       return (
         <StatePanel
           tone="error"
@@ -126,7 +138,7 @@ export function EmployeesPage() {
                 Go to first page
               </Button>
             ) : hasActiveFilters(filters) ? (
-              <Button variant="secondary" onClick={resetFilters}>
+              <Button variant="secondary" onClick={handleResetFilters}>
                 Clear filters
               </Button>
             ) : (
@@ -180,10 +192,12 @@ export function EmployeesPage() {
 
       <EmployeeFiltersPanel
         filters={filters}
+        draft={draft}
         departments={departments}
         errors={filterErrors}
         onChange={updateFilters}
-        onReset={resetFilters}
+        onDraftChange={setDraftValue}
+        onReset={handleResetFilters}
       />
 
       <section
