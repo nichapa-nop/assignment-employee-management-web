@@ -5,6 +5,10 @@ with add, edit and delete.
 
 Backend: [assignment-employee-management-api](https://github.com/nichapa-nop/assignment-employee-management-api)
 
+![Employee list](docs/screenshots/employee-list.png)
+
+![Search, filter and sort](docs/screenshots/employee-filters.png)
+
 ## Tech stack
 
 - Next.js 16 (App Router, Turbopack)
@@ -35,6 +39,15 @@ Open `http://localhost:3000`.
 
 `NEXT_PUBLIC_*` values are inlined into the browser bundle at build time, so
 rebuild after changing them and never put secrets in them.
+
+### Running the full stack
+
+1. Start PostgreSQL locally.
+2. In the API repository: `cp .env.example .env`, adjust the `DB_*` values,
+   then `npm install`, `npm run db:setup` (migrations + Excel seed) and
+   `npm run start:dev` (serves `http://localhost:3001/api`).
+3. In this repository: `cp .env.example .env.local`, `npm install`,
+   `npm run dev` and open `http://localhost:3000`.
 
 ## Features
 
