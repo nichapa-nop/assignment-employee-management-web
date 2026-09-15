@@ -1,56 +1,31 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/form-controls";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import type { FilterDraft, TextFilterKey } from "../hooks/use-filter-draft";
 import { hasActiveFilters } from "../lib/filters";
 import type { EmployeeFilters, StatusFilter } from "../types";
 
-const TYPING_DELAY_MS = 350;
-
-type TextFilterKey = "search" | "salaryMin" | "salaryMax";
-
 interface EmployeeFiltersProps {
   filters: EmployeeFilters;
+  /** Typed values (search, salary range) that are applied after a short pause. */
+  draft: FilterDraft;
   departments: string[];
   errors: string[];
   onChange: (changes: Partial<EmployeeFilters>) => void;
+  onDraftChange: (key: TextFilterKey, value: string) => void;
   onReset: () => void;
 }
 
 export function EmployeeFiltersPanel({
   filters,
+  draft,
   departments,
   errors,
   onChange,
+  onDraftChange,
   onReset,
 }: EmployeeFiltersProps) {
-  // Typed values are kept locally and pushed to the URL after a short pause.
-  const [draft, setDraft] = useState<Record<TextFilterKey, string>>({
-    search: filters.search,
-    salaryMin: filters.salaryMin,
-    salaryMax: filters.salaryMax,
-  });
-
-  // All typed fields are applied together, so switching fields within the
-  // delay can't drop an edit that was still waiting to be applied.
-  const applyDraft = useDebouncedCallback(
-    (next: Record<TextFilterKey, string>) => onChange(next),
-    TYPING_DELAY_MS,
-  );
-
-  const handleTextChange = (key: TextFilterKey, value: string) => {
-    const next = { ...draft, [key]: value };
-    setDraft(next);
-    applyDraft.schedule(next);
-  };
-
-  const handleReset = () => {
-    applyDraft.cancel();
-    setDraft({ search: "", salaryMin: "", salaryMax: "" });
-    onReset();
-  };
 
   return (
     <section
@@ -65,7 +40,7 @@ export function EmployeeFiltersPanel({
               type="search"
               placeholder="Name or ID"
               value={draft.search}
-              onChange={(event) => handleTextChange("search", event.target.value)}
+              onChange={(event) => onDraftChange("search", event.target.value)}
             />
           </Field>
         </div>
@@ -129,7 +104,7 @@ export function EmployeeFiltersPanel({
             placeholder="0.00"
             value={draft.salaryMin}
             onChange={(event) =>
-              handleTextChange("salaryMin", event.target.value)
+              onDraftChange("salaryMin", event.target.value)
             }
           />
         </Field>
@@ -144,7 +119,7 @@ export function EmployeeFiltersPanel({
             placeholder="Any"
             value={draft.salaryMax}
             onChange={(event) =>
-              handleTextChange("salaryMax", event.target.value)
+              onDraftChange("salaryMax", event.target.value)
             }
           />
         </Field>
@@ -159,7 +134,7 @@ export function EmployeeFiltersPanel({
         <Button
           variant="ghost"
           size="sm"
-          onClick={handleReset}
+          onClick={onReset}
           disabled={
             !hasActiveFilters(filters) && !Object.values(draft).some(Boolean)
           }
