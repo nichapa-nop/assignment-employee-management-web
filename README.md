@@ -15,6 +15,7 @@ Backend: [assignment-employee-management-api](https://github.com/nichapa-nop/ass
 - React 19
 - Tailwind CSS 4
 - SWR for client-side data fetching and cache revalidation
+- lucide-react icons
 - TypeScript
 
 ## Prerequisites
@@ -56,10 +57,10 @@ rebuild after changing them and never put secrets in them.
 |---|---|
 | ID — system generated | Shown read-only; never sent by the form |
 | Name — free text | Text input, required, max 100 characters |
-| Department — dropdown | Select populated from `GET /departments` |
-| Salary — `#,##0.00` | Text input that formats on blur; table shows `65,000.00` |
+| Department — dropdown | Select populated from `GET /departments`; table shows a colored badge per department |
+| Salary — `#,##0.00` | Text input (฿ prefix) that formats on blur; table shows `฿65,000.00` |
 | Join Date — calendar | Native date picker; table shows `15-Jan-23` |
-| Status — checkbox | "Active" checkbox; table shows an Active/Inactive badge |
+| Status — checkbox | "Active" checkbox; table shows an Active/Inactive status pill |
 | Last Updated Date — system stamped | Shown read-only (`d-MMM-yy`) |
 
 - **Search** by name or exact ID (debounced while typing)
@@ -86,10 +87,11 @@ rebuild after changing them and never put secrets in them.
 ```
 src/
 ├── app/                        # layout and the single page route
+├── components/layout/          # app shell: sidebar, brand logo, navigation
 ├── components/ui/              # Button, form controls, Modal, Toast
 ├── features/employees/
 │   ├── api/                    # typed API calls
-│   ├── components/             # page, filters, table, form, dialogs, pagination
+│   ├── components/             # page, filters, table, badges, form, dialogs, pagination
 │   ├── hooks/                  # URL-backed filters, SWR data hooks
 │   ├── lib/                    # filter parsing/serialization, form validation
 │   └── types.ts
