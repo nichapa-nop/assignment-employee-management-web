@@ -51,21 +51,6 @@ rebuild after changing them and never put secrets in them.
 3. In this repository: `cp .env.example .env.local`, `npm install`,
    `npm run dev` and open `http://localhost:3000`.
 
-## Deploying to Vercel
-
-1. Deploy the API first (see the API repository's "Deploying to Render").
-2. In Vercel choose **Add New → Project** and import this repository; the
-   Next.js preset needs no changes.
-3. Add the environment variable `NEXT_PUBLIC_API_URL` =
-   `https://<render-service>.onrender.com/api` for Production (and Preview if
-   used), then deploy. The value is inlined at build time, so redeploy after
-   changing it.
-4. Put the resulting URL (for example `https://your-app.vercel.app`) into the
-   API's `CORS_ORIGIN` on Render.
-
-The free Render service sleeps when idle; the first request after a pause can
-take about a minute, during which the page shows its loading state.
-
 ## Features
 
 | Excel requirement | UI |
