@@ -28,8 +28,9 @@ const FALLBACK_STYLE: DepartmentStyle = {
 };
 
 export function DepartmentBadge({ department }: { department: string }) {
-  const { icon: Icon, className } =
-    DEPARTMENT_STYLES[department] ?? FALLBACK_STYLE;
+  const { icon: Icon, className } = Object.hasOwn(DEPARTMENT_STYLES, department)
+    ? DEPARTMENT_STYLES[department]
+    : FALLBACK_STYLE;
 
   return (
     <span
