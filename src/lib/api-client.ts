@@ -39,7 +39,11 @@ export async function apiRequest<T>(
   try {
     response = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
-      headers: { "Content-Type": "application/json", ...init.headers },
+      // Only requests with a body declare JSON; a Content-Type header on GET
+      // would make every read a CORS preflighted request.
+      headers: init.body
+        ? { "Content-Type": "application/json", ...init.headers }
+        : init.headers,
     });
   } catch {
     throw new ApiError(0, [
