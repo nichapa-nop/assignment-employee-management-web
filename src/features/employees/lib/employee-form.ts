@@ -1,3 +1,4 @@
+import { isValidDateOnly } from "@/lib/date-only";
 import { formatSalary } from "@/lib/format";
 import type { Employee, EmployeePayload } from "../types";
 
@@ -44,16 +45,6 @@ export function parseSalary(value: string): number | null {
   return Number(normalized);
 }
 
-function isValidDate(value: string): boolean {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    return false;
-  }
-  const date = new Date(`${value}T00:00:00Z`);
-  return (
-    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
-  );
-}
-
 /** Same rules as the API DTO, so most mistakes are caught before submitting. */
 export function validateEmployeeForm(
   values: EmployeeFormValues,
@@ -85,7 +76,7 @@ export function validateEmployeeForm(
 
   if (!values.joinDate) {
     errors.joinDate = "Join date is required.";
-  } else if (!isValidDate(values.joinDate)) {
+  } else if (!isValidDateOnly(values.joinDate)) {
     errors.joinDate = "Enter a valid date.";
   }
 

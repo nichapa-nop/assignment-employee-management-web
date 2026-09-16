@@ -4,6 +4,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { DayPicker, type ChevronProps, type DateRange } from "react-day-picker";
 import { cn } from "@/lib/cn";
+import { parseDateOnly, toDateOnlyString } from "@/lib/date-only";
 import { formatDate } from "@/lib/format";
 
 /** Calendar dates as `YYYY-MM-DD`; an empty string means "not set". */
@@ -17,24 +18,6 @@ interface DateRangePickerProps {
   value: DateRangeValue;
   onChange: (value: DateRangeValue) => void;
   placeholder?: string;
-}
-
-/** Parses `YYYY-MM-DD` as a local date so the calendar never shifts a day. */
-function toDate(value: string): Date | undefined {
-  if (!value) {
-    return undefined;
-  }
-  const [year, month, day] = value.split("-").map(Number);
-  return new Date(year, month - 1, day);
-}
-
-function toDateString(date: Date | undefined): string {
-  if (!date) {
-    return "";
-  }
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${date.getFullYear()}-${month}-${day}`;
 }
 
 function isSameDay(a: Date, b: Date): boolean {
@@ -87,9 +70,11 @@ export function DateRangePicker({
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const selected: DateRange | undefined = value.from
-    ? { from: toDate(value.from), to: toDate(value.to) }
-    : undefined;
+  // Values come from the URL, so ignore anything that is not a real date
+  // instead of rendering it (the filter panel reports it as an error).
+  const from = parseDateOnly(value.from);
+  const to = parseDateOnly(value.to);
+  const selected: DateRange | undefined = from ? { from, to } : undefined;
   const hasValue = Boolean(value.from || value.to);
   const isSingleDayRange = Boolean(
     selected?.from && selected.to && isSameDay(selected.from, selected.to),
@@ -115,8 +100,8 @@ export function DateRangePicker({
 
   const handleSelect = (range: DateRange | undefined) => {
     const next = {
-      from: toDateString(range?.from),
-      to: toDateString(range?.to),
+      from: toDateOnlyString(range?.from),
+      to: toDateOnlyString(range?.to),
     };
     onChange(next);
     if (next.from && next.to) {
@@ -125,11 +110,9 @@ export function DateRangePicker({
   };
 
   const label =
-    value.from && value.to
-      ? `${formatDate(value.from)} – ${formatDate(value.to)}`
-      : value.from
-        ? `${formatDate(value.from)} – …`
-        : "";
+    from || to
+      ? `${from ? formatDate(value.from) : "…"} – ${to ? formatDate(value.to) : "…"}`
+      : "";
 
   return (
     <div
@@ -185,7 +168,7 @@ export function DateRangePicker({
             resetOnSelect
             autoFocus
             weekStartsOn={1}
-            defaultMonth={selected?.from}
+            defaultMonth={from ?? to}
             modifiers={{
               single_day_range: isSingleDayRange ? selected?.from : false,
             }}

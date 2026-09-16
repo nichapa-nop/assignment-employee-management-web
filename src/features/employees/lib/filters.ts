@@ -1,3 +1,4 @@
+import { isValidDateOnly } from "@/lib/date-only";
 import {
   SORT_FIELDS,
   type EmployeeFilters,
@@ -116,7 +117,12 @@ export function getFilterErrors(filters: EmployeeFilters): string[] {
   ) {
     errors.push("Minimum salary must not be greater than maximum salary.");
   }
-  if (joinDateFrom && joinDateTo && joinDateFrom > joinDateTo) {
+  const hasInvalidDate = [joinDateFrom, joinDateTo].some(
+    (date) => date !== "" && !isValidDateOnly(date),
+  );
+  if (hasInvalidDate) {
+    errors.push("Join date must be a valid date. Clear it and pick again.");
+  } else if (joinDateFrom && joinDateTo && joinDateFrom > joinDateTo) {
     errors.push("Join date 'from' must be on or before 'to'.");
   }
 
