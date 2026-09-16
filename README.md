@@ -16,6 +16,7 @@ Backend: [assignment-employee-management-api](https://github.com/nichapa-nop/ass
 - Tailwind CSS 4
 - SWR for client-side data fetching and cache revalidation
 - lucide-react icons
+- react-day-picker for the join date range calendar
 - TypeScript
 
 ## Prerequisites
@@ -64,7 +65,7 @@ rebuild after changing them and never put secrets in them.
 | Last Updated Date — system stamped | Shown read-only (`d-MMM-yy`) |
 
 - **Search** by name or exact ID (debounced while typing)
-- **Filters**: department, status, join date range, salary range
+- **Filters**: department, status, join date range (pick start and end dates in one calendar), salary range
 - **Sorting** on every column, **pagination** with 10/20/50 rows
 - Search, filters, sorting and page live in the URL, so a refresh or shared
   link keeps the same view
@@ -88,7 +89,7 @@ rebuild after changing them and never put secrets in them.
 src/
 ├── app/                        # layout and the single page route
 ├── components/layout/          # app shell: sidebar, brand logo, navigation
-├── components/ui/              # Button, form controls, Modal, Toast
+├── components/ui/              # Button, form controls, date range picker, Modal, Toast
 ├── features/employees/
 │   ├── api/                    # typed API calls
 │   ├── components/             # page, filters, table, badges, form, dialogs, pagination
