@@ -8,6 +8,7 @@ import {
   Search,
   UserCheck,
 } from "lucide-react";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Field, Input, Select } from "@/components/ui/form-controls";
 import type { FilterDraft, TextFilterKey } from "../hooks/use-filter-draft";
 import { hasActiveFilters } from "../lib/filters";
@@ -33,7 +34,6 @@ export function EmployeeFiltersPanel({
   onDraftChange,
   onReset,
 }: EmployeeFiltersProps) {
-
   return (
     <section
       aria-label="Search and filters"
@@ -82,25 +82,17 @@ export function EmployeeFiltersPanel({
           </Select>
         </Field>
 
-        <Field id="filter-join-from" label="Joined from" icon={CalendarDays}>
-          <Input
-            id="filter-join-from"
-            type="date"
-            value={filters.joinDateFrom}
-            max={filters.joinDateTo || undefined}
-            onChange={(event) => onChange({ joinDateFrom: event.target.value })}
-          />
-        </Field>
-
-        <Field id="filter-join-to" label="Joined to" icon={CalendarDays}>
-          <Input
-            id="filter-join-to"
-            type="date"
-            value={filters.joinDateTo}
-            min={filters.joinDateFrom || undefined}
-            onChange={(event) => onChange({ joinDateTo: event.target.value })}
-          />
-        </Field>
+        <div className="sm:col-span-2">
+          <Field id="filter-join-date" label="Join date" icon={CalendarDays}>
+            <DateRangePicker
+              id="filter-join-date"
+              value={{ from: filters.joinDateFrom, to: filters.joinDateTo }}
+              onChange={({ from, to }) =>
+                onChange({ joinDateFrom: from, joinDateTo: to })
+              }
+            />
+          </Field>
+        </div>
 
         <Field id="filter-salary-min" label="Min salary" icon={Database}>
           <Input
@@ -111,9 +103,7 @@ export function EmployeeFiltersPanel({
             step="0.01"
             placeholder="0.00"
             value={draft.salaryMin}
-            onChange={(event) =>
-              onDraftChange("salaryMin", event.target.value)
-            }
+            onChange={(event) => onDraftChange("salaryMin", event.target.value)}
           />
         </Field>
 
@@ -126,9 +116,7 @@ export function EmployeeFiltersPanel({
             step="0.01"
             placeholder="Any"
             value={draft.salaryMax}
-            onChange={(event) =>
-              onDraftChange("salaryMax", event.target.value)
-            }
+            onChange={(event) => onDraftChange("salaryMax", event.target.value)}
           />
         </Field>
       </div>
